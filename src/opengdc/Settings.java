@@ -18,6 +18,15 @@ public class Settings {
     public static int getUpdateDays() {
         return UPDATE_DAYS;
     }
+	
+    // A combination od date and time of day in the form [-]CCYY-MM-DDThh:mm:ss[Z|(+|-)hh:mm]
+    private static String FILES_DATETIME = "1989-12-30";
+    public static String getFilesDatetime() {
+	return FILES_DATETIME;
+    }
+    public static void setFilesDatetime(String files_datetime) {
+        FILES_DATETIME = files_datetime;
+    }
     
     // debug references local
 //    private static final String DEBUG_TMP = "/Users/eleonora/Downloads/test_gdc_download/tmp/";

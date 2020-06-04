@@ -25,7 +25,28 @@ public class UpdateScheduler {
         date.set(Calendar.HOUR, 1);
         date.set(Calendar.MINUTE, 0);
         date.set(Calendar.SECOND, 0);*/
-        timer.schedule(new UpdateTask(FTP_ROOT, FTP_REPO), date.getTime(), TimeUnit.DAYS.toMillis(Settings.getUpdateDays()));
+        
+        /*String inputProgram = null;
+        String inputDiseaseAbbreviation = null;
+        if (args.length == 2) {
+            inputProgram = args[0];
+            inputDiseaseAbbreviation = args[1];
+        }
+        else {
+            System.err.println("Usage example: java -jar app.jar 'program' 'disease'");
+            System.exit(1);
+        }*/
+        
+        //String inputProgram = "TCGA";
+        //String inputDiseaseAbbreviation = "ACC";
+        //String inputDisease = (inputProgram+"-"+inputDiseaseAbbreviation).toLowerCase();
+        
+        files_datetime = Settings.getFilesDatetime();
+        if (args.length == 2) {
+            //args[0];
+            files_datetime = args[1];
+        }
+        timer.schedule(new UpdateTask(FTP_ROOT, FTP_REPO, files_datetime), date.getTime(), TimeUnit.DAYS.toMillis(Settings.getUpdateDays()));
     }
     
 }

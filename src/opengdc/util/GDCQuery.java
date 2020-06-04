@@ -56,44 +56,84 @@ public class GDCQuery {
 
 	public static String query(String disease, String dataType, int recursive_iteration) {
 		try {
-			String payload = "{" +
-					"\"filters\":{" +
-					"\"op\":\"and\"," +
-					"\"content\":[" +
-					"{" +
-					"\"op\":\"=\"," +
-					"\"content\":{" +
-					"\"field\":\"cases.project.project_id\"," +
-					"\"value\":[" +
-					"\""+disease+"\"" +
-					"]" + 
-					"}" +
-					"}," +
-					"{" +
-					"\"op\":\"=\"," +
-					"\"content\":{" +
-					"\"field\":\"files.data_type\"," +
-					"\"value\":[" +
-					"\""+dataType+"\"" +
-					"]" + 
-					"}" +
-					"}," +
-					"{" +
-					"\"op\":\"=\"," +
-					"\"content\":{" +
-					"\"field\":\"access\"," +
-					"\"value\":[" +
-					"\"open\"" +
-					"]" + 
-					"}" +
-					"}" +
-					"]" +
-					"}," +
-					"\"format\":\"json\"," +
-					"\"size\":\""+SIZE_LIMIT+"\"," +
-					"\"pretty\":\"true\"" +
-					"}";
+			String files_datetime = Settings.getFilesDatetime()
+			String payload_top = "{" +
+						"\"filters\":{" +
+							"\"op\":\"and\"," +
+							"\"content\":[" +
+								"{" +
+									"\"op\":\"=\"," +
+									"\"content\":{" +
+										"\"field\":\"cases.project.project_id\"," +
+										"\"value\":[" +
+											"\""+disease+"\"" +
+										"]" + 
+									"}" +
+								"}," +
+								"{" +
+									"\"op\":\"=\"," +
+									"\"content\":{" +
+										"\"field\":\"files.data_type\"," +
+										"\"value\":[" +
+											"\""+dataType+"\"" +
+										"]" + 
+									"}" +
+								"}," +
+								"{" +
+									"\"op\":\"=\"," +
+									"\"content\":{" +
+										"\"field\":\"files.access\"," +
+										"\"value\":[" +
+											"\"open\"" +
+										"]" + 
+									"}" +
+								"}";
+			
+			payload_datetime = ",{" +
+						"\"op\":\">=\"," +
+						"\"content\":{" +
+							"\"field\":\"files.created_datetime\"," +
+							"\"value\":[" +
+								"\""+files_datetime+"\"" +
+							"]" + 
+						"}" +
+					   "}";
 
+			if (dataType.toLowerCase().contains("clinical") || dataType.toLowerCase().contains("biospecimen")) {
+				payload_datetime = ",{" +
+							"\"op\":\"or\"," +
+							"\"content\":[" +
+								  "{" +
+									"\"op\":\">=\"," +
+									"\"content\":{" +
+										"\"field\":\"files.created_datetime\"," +
+										"\"value\":[" +
+											"\""+files_datetime+"\"" +
+										"]" + 
+									"}" +
+								   "}," +
+								   "{" +
+									"\"op\":\">=\"," +
+									"\"content\":{" +
+										"\"field\":\"files.updated_datetime\"," +
+										"\"value\":[" +
+											"\""+files_datetime+"\"" +
+										"]" + 
+									"}" +
+								   "}" +
+							"]" +
+						    "}"
+			}
+			
+			payload_bottom = "]" +
+				"}," +
+				"\"format\":\"json\"," +
+				"\"size\":\""+SIZE_LIMIT+"\"," +
+				"\"pretty\":\"true\"" +
+			"}";
+			
+			payload = payload_top + payload_datetime + payload_bottom;
+			
 			String url = BASE_SEARCH_URL;
 			URL obj = new URL(url);
 			HttpURLConnection con = (HttpURLConnection) obj.openConnection();

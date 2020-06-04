@@ -31,21 +31,27 @@ public class UpdateTask extends TimerTask {
     
     private static String ftp_root;
     private static String ftp_repo;
+    private static String files_datetime;
     
-    public UpdateTask(String ftp_root_arg, String ftp_repo_arg) {
+    public UpdateTask(String ftp_root_arg, String ftp_repo_arg, String files_datetime_arg) {
         ftp_root = ftp_root_arg;
         ftp_repo = ftp_repo_arg;
+	files_datetime = files_datetime_arg;
     }
 
     @Override
     public void run() {
         System.out.println("----------------------------------------");
         System.out.println("Timer task started at: " + new Date());
-        updateTask();
+        //updateTask();
+	Settings.setFilesDatetime(files_datetime)
+	Main.runMain();
         System.out.println("Timer task finished at: " + new Date());
         System.out.println("----------------------------------------");
     }
 
+    // deprecated
+    // use Main class and set the CREATED_DATETIME variable under Settings
     private void updateTask() {
         Settings.setOpenGDCFTPRepoBase(ftp_repo);
         File tmp_download_dir = new File(Settings.getTmpDir() + "_download/");
