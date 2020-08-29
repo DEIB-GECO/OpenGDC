@@ -1,6 +1,8 @@
 package opengdc;
 
 import java.io.File;
+import java.net.URISyntaxException;
+import java.nio.file.Paths;
 
 /**
  *
@@ -42,12 +44,19 @@ public class Settings {
     }
     
     // ****************** tmp dir ******************
-    private static final String TMP_DIR = "./appdata/tmp/";
     public static String getTmpDir() {
-        String tmpDir = TMP_DIR;
-        if (DEBUG) tmpDir = DEBUG_TMP;
-        if (!(new File(tmpDir)).exists())
-            (new File(tmpDir)).mkdirs();
+        String tmpDir = "";
+        try {
+            tmpDir = Paths.get( new File(Settings.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParentFile().getPath(),
+                                       "appdata", "tmp" ).toString();
+            if (DEBUG) tmpDir = DEBUG_TMP;
+            if ( !tmpDir.endsWith( File.separator ) )
+                tmpDir = tmpDir + File.separator;
+            if (!(new File(tmpDir)).exists())
+                (new File(tmpDir)).mkdirs();
+        } catch (URISyntaxException ex) {
+            ex.printStackTrace();
+        }
         return tmpDir;
     }
     // *********************************************
@@ -147,58 +156,103 @@ public class Settings {
     // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     
     
-    private static final String MIRBASE_HSA_GFF3_DATA = "./appdata/mirbase/hsa.gff3";
     public static String getMirbaseHsaDataPath() {
-        if (DEBUG) return DEBUG_APPDATA+"mirbase/hsa.gff3";
-        return MIRBASE_HSA_GFF3_DATA;
+        try {
+            if (DEBUG) return DEBUG_APPDATA+"mirbase/hsa.gff3";
+            return Paths.get( new File(Settings.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParentFile().getPath(),
+                              "appdata", "mirbase", "hsa.gff3" ).toString();
+        } catch (URISyntaxException ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
     
-    private static final String NCBI_DATA = "./appdata/ncbi/ref_GRCh38.p2_top_level.gff3";
     public static String getNCBIDataPath() {
-        if (DEBUG) return DEBUG_APPDATA+"ncbi/ref_GRCh38.p2_top_level.gff3";
-        return NCBI_DATA;
+        try {
+            if (DEBUG) return DEBUG_APPDATA+"ncbi/ref_GRCh38.p2_top_level.gff3";
+            return Paths.get( new File(Settings.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParentFile().getPath(),
+                              "appdata", "ncbi", "ref_GRCh38.p2_top_level.gff3" ).toString();
+        } catch (URISyntaxException ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
     
-    private static final String HISTORY_NCBI_DATA = "./appdata/ncbi/gene_history.txt";
     public static String getHistoryNCBIDataPath() {
-        if (DEBUG) return DEBUG_APPDATA+"ncbi/gene_history.txt";
-        return HISTORY_NCBI_DATA;
+        try {
+            if (DEBUG) return DEBUG_APPDATA+"ncbi/gene_history.txt";
+            return Paths.get( new File(Settings.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParentFile().getPath(),
+                              "appdata", "ncbi", "gene_history.txt" ).toString();
+        } catch (URISyntaxException ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
     
-    private static final String GENENAMES_DATA = "./appdata/genenames/hgnc_complete_set.txt";
     public static String getGENENAMESDataPath() {
-        if (DEBUG) return DEBUG_APPDATA+"genenames/hgnc_complete_set.txt";
-        return GENENAMES_DATA;
+        try {
+            if (DEBUG) return DEBUG_APPDATA+"genenames/hgnc_complete_set.txt";
+            return Paths.get( new File(Settings.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParentFile().getPath(),
+                              "appdata", "genenames", "hgnc_complete_set.txt" ).toString();
+        } catch (URISyntaxException ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
 
-    private static final String GENCODE_DATA = "./appdata/gencode/gencode.v22.annotation.gtf";
     public static String getGENCODEDataPath() {
-        if (DEBUG) return DEBUG_APPDATA+"gencode/gencode.v22.annotation.gtf";
-        return GENCODE_DATA;
+        try {
+            if (DEBUG) return DEBUG_APPDATA+"gencode/gencode.v22.annotation.gtf";
+            return Paths.get( new File(Settings.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParentFile().getPath(),
+                              "appdata", "gencode", "gencode.v22.annotation.gtf" ).toString();
+        } catch (URISyntaxException ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
     
-    private static final String ADDITIONAL_META_ATTRIBUTES = "./appdata/meta/additional_attributes.tsv";
     public static String getAdditionalMetaAttributesPath() {
-        if (DEBUG) return DEBUG_APPDATA+"meta/additional_attributes.tsv";
-        return ADDITIONAL_META_ATTRIBUTES;
+        try {
+            if (DEBUG) return DEBUG_APPDATA+"meta/additional_attributes.tsv";
+            return Paths.get( new File(Settings.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParentFile().getPath(),
+                              "appdata", "meta", "additional_attributes.tsv" ).toString();
+        } catch (URISyntaxException ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
     
-    private static final String BIOSPECIMEN_YAML = "./appdata/meta/tcga_biospecimen.yaml";
     public static String getBiospecimenYAML() {
-        if (DEBUG) return DEBUG_APPDATA+"meta/tcga_biospecimen.yaml";
-        return BIOSPECIMEN_YAML;
+        try {
+            if (DEBUG) return DEBUG_APPDATA+"meta/tcga_biospecimen.yaml";
+            return Paths.get( new File(Settings.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParentFile().getPath(),
+                              "appdata", "meta", "tcga_biospecimen.yaml" ).toString();
+        } catch (URISyntaxException ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
     
-    private static final String CLINICAL_YAML = "./appdata/meta/tcga_clinical.yaml";
     public static String getClinicalYAML() {
-        if (DEBUG) return DEBUG_APPDATA+"meta/tcga_clinical.yaml";
-        return CLINICAL_YAML;
+        try {
+            if (DEBUG) return DEBUG_APPDATA+"meta/tcga_clinical.yaml";
+            return Paths.get( new File(Settings.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParentFile().getPath(),
+                              "appdata", "meta", "tcga_clinical.yaml" ).toString();
+        } catch (URISyntaxException ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
     
-    private static final String GDC_YAML = "./appdata/meta/tcga_gdc.yaml";
     public static String getGDCYAML() {
-        if (DEBUG) return DEBUG_APPDATA+"meta/tcga_gdc.yaml";
-        return GDC_YAML;
+        try {
+            if (DEBUG) return DEBUG_APPDATA+"meta/tcga_gdc.yaml";
+            return Paths.get( new File(Settings.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParentFile().getPath(),
+                              "appdata", "meta", "tcga_gdc.yaml" ).toString();
+        } catch (URISyntaxException ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
     
     private static final String UPDATE_TABLE_NAME = "updatetable.txt";

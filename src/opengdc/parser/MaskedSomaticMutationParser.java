@@ -56,13 +56,14 @@ public class MaskedSomaticMutationParser extends BioParser {
         
         File[] files = (new File(inPath)).listFiles();
         HashMap<String, HashSet<String>> fileUUID2aliquotUUIDs = new HashMap<>();
+        int progress_counter = 1;
         for (File f: files) {
             if (f.isFile()) {
                 String file_uuid = f.getName().split("_")[0];
                 String extension = FSUtils.getFileExtension(f);
                 if (getAcceptedInputFileFormats().contains(extension) && !getSkipFiles().contains(f.getName().toLowerCase())) {
-                    System.err.println("Processing " + f.getName());
-                    GUI.appendLog(this.getLogger(), "Processing " + f.getName() + "\n");
+                    System.err.println("Processing entry " + progress_counter + "/" + acceptedFiles + ": " + f.getName());
+                    GUI.appendLog(this.getLogger(), "Processing entry " + progress_counter + "/" + acceptedFiles + ": " + f.getName() + "\n");
                     
                     HashSet<String> aliquot_uuids = MaskedSomaticMutationReader.getUUIDsFromMaf(f.getAbsolutePath());
                     fileUUID2aliquotUUIDs.put(file_uuid, aliquot_uuids);
@@ -240,6 +241,7 @@ public class MaskedSomaticMutationParser extends BioParser {
                     
                 }
             }
+            progress_counter++;
         }
         
         printErrorFileLog(error_inputFile2outputFile);

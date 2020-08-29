@@ -41,7 +41,7 @@ public class UpdateScheduler {
         //String inputDiseaseAbbreviation = "ACC";
         //String inputDisease = (inputProgram+"-"+inputDiseaseAbbreviation).toLowerCase();
         
-        files_datetime = Settings.getFilesDatetime();
+        String files_datetime = Settings.getFilesDatetime();
         if (args.length == 2) {
             //args[0];
             files_datetime = args[1];

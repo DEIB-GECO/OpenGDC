@@ -59,6 +59,7 @@ public class MetadataParserXML extends BioParser {
         HashMap<String, String> aliquotUUID2fileUUID = new HashMap<>();
         
         File[] files = (new File(inPath)).listFiles();
+        int progress_counter = 1;
         for (File f: files) {
             // remove all elements in aliquotNodes from previous iterations
             MetadataHandler.emptyAliquotNodes();
@@ -66,8 +67,8 @@ public class MetadataParserXML extends BioParser {
                 String extension = FSUtils.getFileExtension(f);
                 if (getAcceptedInputFileFormats().contains(extension) && !getSkipFiles().contains(f.getName().toLowerCase())) {
                     String file_uuid = f.getName().split("_")[0];
-                    System.err.println("Processing " + f.getName());
-                    GUI.appendLog(this.getLogger(), "Processing " + f.getName() + "\n");
+                    System.err.println("Processing entry " + progress_counter + "/" + acceptedFiles + ": " + f.getName());
+                    GUI.appendLog(this.getLogger(), "Processing entry " + progress_counter + "/" + acceptedFiles + ": " + f.getName() + "\n");
                     
                     HashMap<String, Object> metadata_from_xml = MetadataHandler.getXMLMap(f.getAbsolutePath());
                     if (f.getName().toLowerCase().contains("clinical")) {                        
@@ -103,6 +104,7 @@ public class MetadataParserXML extends BioParser {
                     }
                 }
             }
+            progress_counter++;
         }
         
         ArrayList<String> skippedAliquots = convertProcedure(program, disease, dataType, outPath, clinicalBigMap, biospecimenBigMap, new ArrayList<>(), aliquotUUID2fileUUID);

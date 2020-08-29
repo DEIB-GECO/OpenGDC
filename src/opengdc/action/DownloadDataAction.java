@@ -58,8 +58,12 @@ public class DownloadDataAction extends Action {
         // TODO activate progress bar
         
         /* DOWNLOAD (AND EXTRACT (AND REMOVE)) FILE BY FILE */
-        for (String uuid: dataMap.keySet())
+        int progress_counter = 1;
+        for (String uuid: dataMap.keySet()) {
+            GUI.appendLog(logPane, "Processing entry: " + progress_counter + "/" + dataMap.size() + "\n");
             downloadSingleData(uuid, dataMap, gdc_path, autoextract, autoremove);
+            progress_counter++;
+        }
     }
     
     public static void downloadSingleData(String uuid, HashMap<String, HashMap<String, String>> dataMap, String gdc_path, boolean autoextract, boolean autoremove) {

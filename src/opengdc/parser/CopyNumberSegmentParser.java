@@ -59,12 +59,13 @@ public class CopyNumberSegmentParser extends BioParser {
         HashSet<String> filesPathConverted = new HashSet<>();
         
         File[] files = (new File(inPath)).listFiles();
+        int progress_counter = 1;
         for (File f: files) {
             if (f.isFile()) {
                 String extension = FSUtils.getFileExtension(f);
                 if (getAcceptedInputFileFormats().contains(extension) && !getSkipFiles().contains(f.getName().toLowerCase())) {
-                    System.err.println("Processing " + f.getName());
-                    GUI.appendLog(this.getLogger(), "Processing " + f.getName() + "\n");
+                    System.err.println("Processing entry " + progress_counter + "/" + acceptedFiles + ": " + f.getName());
+                    GUI.appendLog(this.getLogger(), "Processing entry " + progress_counter + "/" + acceptedFiles + ": " + f.getName() + "\n");
                     
                     String file_uuid = f.getName().split("_")[0];
                     HashSet<String> attributes = new HashSet<>();
@@ -177,6 +178,7 @@ public class CopyNumberSegmentParser extends BioParser {
                         System.err.println("ERROR: an error has occurred while retrieving the aliquot UUID for :" + file_uuid);
                         GUI.appendLog(this.getLogger(), "ERROR: an error has occurred while retrieving the aliquot UUID for :" + file_uuid);
                     }
+                    progress_counter++;
                 }
             }
         }

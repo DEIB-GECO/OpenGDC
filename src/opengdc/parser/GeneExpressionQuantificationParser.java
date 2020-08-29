@@ -94,6 +94,7 @@ public class GeneExpressionQuantificationParser extends BioParser {
         }
                 
         HashSet<String> already_processed = new HashSet<>();
+        int progress_counter = 1;
         for (File f: files) {
             String filename = f.getName();
             String extension = FSUtils.getFileExtension(f);
@@ -129,8 +130,8 @@ public class GeneExpressionQuantificationParser extends BioParser {
                         if (fpkmuq_file != null) already_processed.add(fpkmuq_file.getName());
 
                         // start processing files
-                        System.err.println("Processing " + aliquot_uuid + " (counts, FPKM, FPKM-UQ)");
-                        GUI.appendLog(this.getLogger(), "Processing " + aliquot_uuid + " (counts, FPKM, FPKM-UQ)" + "\n");
+                        System.err.println("Processing entries " + progress_counter + "/" + (acceptedFiles/3) + ": " + aliquot_uuid + " (counts, FPKM, FPKM-UQ)");
+                        GUI.appendLog(this.getLogger(), "Processing entries " + progress_counter + "/" + (acceptedFiles/3) + ": " + aliquot_uuid + " (counts, FPKM, FPKM-UQ)" + "\n");
 
                         HashMap<String, String> ensembl2count = GeneExpressionQuantificationReader.getEnsembl2Value(counts_file);
                         HashMap<String, String> ensembl2fpkm = GeneExpressionQuantificationReader.getEnsembl2Value(fpkm_file);
@@ -269,6 +270,7 @@ public class GeneExpressionQuantificationParser extends BioParser {
                     }
                 }
             }
+            progress_counter++;
         }
 
         printErrorFileLog(error_outputFile2inputFile);

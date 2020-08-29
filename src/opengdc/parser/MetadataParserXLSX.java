@@ -68,13 +68,14 @@ public class MetadataParserXLSX extends BioParser {
         dataTypes.add("Masked Somatic Mutation");
         
         File[] files = (new File(inPath)).listFiles();
+        int progress_counter = 1;
         for (File f: files) {
             if (f.isFile()) {
                 String extension = FSUtils.getFileExtension(f);
                 if (getAcceptedInputFileFormats().contains(extension) && !getSkipFiles().contains(f.getName().toLowerCase())) {
                     String file_uuid = f.getName().split("_")[0];
-                    System.err.println("Processing " + f.getName());
-                    GUI.appendLog(this.getLogger(), "Processing " + f.getName() + "\n");
+                    System.err.println("Processing entry " + progress_counter + "/" + acceptedFiles + ": " + f.getName());
+                    GUI.appendLog(this.getLogger(), "Processing entry " + progress_counter + "/" + acceptedFiles + ": " + f.getName() + "\n");
 
                     if (f.getName().toLowerCase().contains("clinical")) {                        
                         HashMap<String, HashMap<String, String>> metadata_from_tsv = MetadataHandler.getXLSXMap(this.logPane, f.getAbsolutePath(), "target usi");
@@ -98,6 +99,7 @@ public class MetadataParserXLSX extends BioParser {
                     }
                 }
             }
+            progress_counter++;
         }
 
         if (!biospecimenBigMap.isEmpty()) {

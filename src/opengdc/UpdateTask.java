@@ -44,7 +44,7 @@ public class UpdateTask extends TimerTask {
         System.out.println("----------------------------------------");
         System.out.println("Timer task started at: " + new Date());
         //updateTask();
-	Settings.setFilesDatetime(files_datetime)
+	Settings.setFilesDatetime(files_datetime);
 	Main.runMain();
         System.out.println("Timer task finished at: " + new Date());
         System.out.println("----------------------------------------");

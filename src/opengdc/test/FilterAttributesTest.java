@@ -19,15 +19,17 @@ public class FilterAttributesTest {
         attributes.add("manually_curated__associated_entities__case_id");
         attributes.add("manually_curated__cases__case_id");
                 
-        String selected_attribute = MetadataHandler.selectAttribute(attributes);
-        System.err.println(selected_attribute);
+        ArrayList<String> selected_attributes = MetadataHandler.selectAttributes(attributes);
+        for (String attr: selected_attributes)
+            System.err.println(attr);
         
         attributes = new ArrayList<>();
         attributes.add("manually_curated__associated_entities__entity_id");
         attributes.add("manually_curated__annotations__entity_id");
         
-        selected_attribute = MetadataHandler.selectAttribute(attributes);
-        System.err.println(selected_attribute);
+        selected_attributes = MetadataHandler.selectAttributes(attributes);
+        for (String attr: selected_attributes)
+            System.err.println(attr);
     }
     
 }

@@ -56,7 +56,7 @@ public class GDCQuery {
 
 	public static String query(String disease, String dataType, int recursive_iteration) {
 		try {
-			String files_datetime = Settings.getFilesDatetime()
+			String files_datetime = Settings.getFilesDatetime();
 			String payload_top = "{" +
 						"\"filters\":{" +
 							"\"op\":\"and\"," +
@@ -89,15 +89,15 @@ public class GDCQuery {
 									"}" +
 								"}";
 			
-			payload_datetime = ",{" +
-						"\"op\":\">=\"," +
-						"\"content\":{" +
+			String payload_datetime = ",{" +
+                                                    "\"op\":\">=\"," +
+                                                    "\"content\":{" +
 							"\"field\":\"files.created_datetime\"," +
 							"\"value\":[" +
 								"\""+files_datetime+"\"" +
 							"]" + 
-						"}" +
-					   "}";
+                                                    "}" +
+                                                  "}";
 
 			if (dataType.toLowerCase().contains("clinical") || dataType.toLowerCase().contains("biospecimen")) {
 				payload_datetime = ",{" +
@@ -122,17 +122,17 @@ public class GDCQuery {
 									"}" +
 								   "}" +
 							"]" +
-						    "}"
+						    "}";
 			}
 			
-			payload_bottom = "]" +
-				"}," +
-				"\"format\":\"json\"," +
-				"\"size\":\""+SIZE_LIMIT+"\"," +
-				"\"pretty\":\"true\"" +
-			"}";
+			String payload_bottom = "]" +
+                                            "}," +
+                                            "\"format\":\"json\"," +
+                                            "\"size\":\""+SIZE_LIMIT+"\"," +
+                                            "\"pretty\":\"true\"" +
+                                        "}";
 			
-			payload = payload_top + payload_datetime + payload_bottom;
+			String payload = payload_top + payload_datetime + payload_bottom;
 			
 			String url = BASE_SEARCH_URL;
 			URL obj = new URL(url);

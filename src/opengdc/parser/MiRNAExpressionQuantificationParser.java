@@ -72,12 +72,13 @@ public class MiRNAExpressionQuantificationParser extends BioParser {
         dataTypes.add("Masked Somatic Mutation");
         
         File[] files = (new File(inPath)).listFiles();
+        int progress_counter = 1;
         for (File f: files) {
             if (f.isFile()) {
                 String extension = FSUtils.getFileExtension(f);
                 if (getAcceptedInputFileFormats().contains(extension) && !getSkipFiles().contains(f.getName().toLowerCase())) {
-                    System.err.println("Processing " + f.getName());
-                    GUI.appendLog(this.getLogger(), "Processing " + f.getName() + "\n");
+                    System.err.println("Processing entry " + progress_counter + "/" + acceptedFiles + ": " + f.getName());
+                    GUI.appendLog(this.getLogger(), "Processing entry " + progress_counter + "/" + acceptedFiles + ": " + f.getName() + "\n");
                     
                     String file_uuid = f.getName().split("_")[0];
                     HashSet<String> attributes = new HashSet<>();
@@ -213,6 +214,7 @@ public class MiRNAExpressionQuantificationParser extends BioParser {
                     }
                 }
             }
+            progress_counter++;
         }
         
         printErrorFileLog(error_inputFile2outputFile);
